@@ -13,5 +13,6 @@ import lombok.ToString;
 @ToString
 public class UserLoginRequest {
     private String email;
+
     private String password;
 }

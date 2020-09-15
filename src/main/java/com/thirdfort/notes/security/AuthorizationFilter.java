@@ -1,8 +1,11 @@
 package com.thirdfort.notes.security;
 
-import com.thirdfort.notes.io.entities.UserEntity;
-import com.thirdfort.notes.io.repositories.UserRepository;
+import com.thirdfort.notes.exceptions.userexceptions.UserServiceException;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,16 +16,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class AuthorizationFilter extends BasicAuthenticationFilter {
 
-    private final UserRepository userRepository;
-
-    public AuthorizationFilter(
-            AuthenticationManager authenticationManager,
-            UserRepository userRepository) {
+    public AuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
-        this.userRepository = userRepository;
     }
 
     @Override
@@ -31,7 +30,6 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
         String header = request.getHeader(SecurityConstants.HEADER_STRING);
 
         if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
-            //SecurityContextHolder.getContext().setAuthentication(null);// You explicitly need to set null.
             chain.doFilter(request, response);
             return;
         }
@@ -47,17 +45,20 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
         if (token != null) {
             token = token.replace(SecurityConstants.TOKEN_PREFIX, "");
 
-            String user = Jwts.parser()
-                    .setSigningKey(SecurityConstants.getTokenSecret())
-                    .parseClaimsJws(token)
-                    .getBody()
-                    .getSubject();
+            String user;
+            try {
+                user = Jwts.parser()
+                        .setSigningKey(SecurityConstants.getTokenSecret())
+                        .parseClaimsJws(token)
+                        .getBody()
+                        .getSubject();
+            }
+            catch (Exception e) {
+                throw new UserServiceException(e.getMessage());
+            }
 
             if (user != null) {
-                UserEntity userEntity = userRepository.findById(user).get();
-
-                UserPrincipal userPrincipal = new UserPrincipal(userEntity);
-                return new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
+                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
             }
         }
 
