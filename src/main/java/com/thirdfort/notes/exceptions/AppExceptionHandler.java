@@ -1,5 +1,6 @@
 package com.thirdfort.notes.exceptions;
 
+import com.thirdfort.notes.exceptions.userexceptions.UserAuthenticationException;
 import com.thirdfort.notes.exceptions.userexceptions.UserServiceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,12 @@ import java.util.Date;
 public class AppExceptionHandler {
     @ExceptionHandler(value = { UserServiceException.class})
     public ResponseEntity<Object> handleUserServiceExceptions(UserServiceException e) {
+        ErrorMessage errorMessage = new ErrorMessage(new Date(), e.getMessage());
+        return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(value = { UserAuthenticationException.class })
+    public ResponseEntity<Object> handleUserAuthentictaionException(UserAuthenticationException e) {
         ErrorMessage errorMessage = new ErrorMessage(new Date(), e.getMessage());
         return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }

@@ -1,13 +1,8 @@
 package com.thirdfort.notes.shared;
 
-import com.thirdfort.notes.security.SecurityConstants;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
-import java.util.Date;
 import java.util.Random;
 
 @Component

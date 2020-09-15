@@ -2,7 +2,6 @@ package com.thirdfort.notes.ui.controllers;
 
 import com.thirdfort.notes.exceptions.ErrorMessages;
 import com.thirdfort.notes.exceptions.userexceptions.UserServiceException;
-import com.thirdfort.notes.io.repositories.UserRepository;
 import com.thirdfort.notes.services.UserService;
 import com.thirdfort.notes.shared.dtos.UserDto;
 import com.thirdfort.notes.ui.models.requests.UserDetailsRequest;

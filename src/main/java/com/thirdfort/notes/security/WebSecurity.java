@@ -1,6 +1,5 @@
 package com.thirdfort.notes.security;
 
-import com.thirdfort.notes.io.repositories.UserRepository;
 import com.thirdfort.notes.services.UserService;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
