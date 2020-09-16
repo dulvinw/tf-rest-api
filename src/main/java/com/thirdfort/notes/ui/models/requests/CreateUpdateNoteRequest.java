@@ -21,6 +21,5 @@ public class CreateUpdateNoteRequest {
     @NotBlank(message = "Date cannot be empty")
     private String createdDate;
 
-    @NotBlank(message = "Archived status cannot be empty")
     private boolean archived;
 }
