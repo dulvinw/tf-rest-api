@@ -55,11 +55,8 @@ public class NotesServiceImpl implements NotesService {
     public NotesDto updateNote(String uid, String noteId, NotesDto requestDto) {
         NotesDocument document = checkIfValidNoteForCurrentUser(uid, noteId, RequestOperationName.UPDATE);
 
-        document.setNoteId(noteId);
-        document.setUid(uid);
         document.setBody(requestDto.getBody());
         document.setArchived(requestDto.isArchived());
-        document.setCreatedDate(requestDto.getCreatedDate());
 
         NotesDocument updatedNote = notesRepository.save(document);
         return modelMapper.map(updatedNote, NotesDto.class);
