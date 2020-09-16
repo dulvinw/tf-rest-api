@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class NotesController {
     }
 
     @PostMapping
-    public NotesResponse createNote(Principal principal, @RequestBody CreateUpdateNoteRequest request) {
+    public NotesResponse createNote(Principal principal, @Valid @RequestBody CreateUpdateNoteRequest request) {
         String uid = principal.getName();
 
         NotesDto requestDto = modelMapper.map(request, NotesDto.class);
@@ -69,7 +70,7 @@ public class NotesController {
     }
 
     @PutMapping(path = "/{noteId}")
-    public NotesResponse updateNote(Principal principal, @RequestBody CreateUpdateNoteRequest request,
+    public NotesResponse updateNote(Principal principal, @Valid @RequestBody CreateUpdateNoteRequest request,
                                     @PathVariable String noteId) {
 
         String uid = principal.getName();

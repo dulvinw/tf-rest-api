@@ -15,12 +15,12 @@ import javax.validation.constraints.NotBlank;
 @Validated
 public class CreateUpdateNoteRequest {
 
-    @NotBlank
+    @NotBlank(message = "Body cannot be empty")
     private String body;
 
-    @NotBlank
+    @NotBlank(message = "Date cannot be empty")
     private String createdDate;
 
-    @NotBlank
+    @NotBlank(message = "Archived status cannot be empty")
     private boolean archived;
 }
