@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "Users")
-public class UserEntity {
+public class UserDocument {
     @Id
     private String uid;
     private String name;

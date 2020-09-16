@@ -1,6 +1,6 @@
 package com.thirdfort.notes.io.repositories;
 
-import com.thirdfort.notes.io.entities.UserEntity;
+import com.thirdfort.notes.io.entities.UserDocument;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends MongoRepository<UserEntity, String> {
+public interface UserRepository extends MongoRepository<UserDocument, String> {
 
     @Query("{email: '?0'}")
-    List<UserEntity> findByEmail(String email);
+    List<UserDocument> findByEmail(String email);
 }
