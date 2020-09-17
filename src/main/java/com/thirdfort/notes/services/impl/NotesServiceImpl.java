@@ -25,12 +25,23 @@ public class NotesServiceImpl implements NotesService {
 
     ModelMapper modelMapper = new ModelMapper();
 
+    /**
+     * Get all notes belongs to a user
+     * @param uid Users public id
+     * @return list of notes
+     */
     @Override
     public List<NotesDto> getNotesForUser(String uid) {
         List<NotesDocument> notesDocuments = notesRepository.findByUserId(uid);
         return getNotesDtos(notesDocuments);
     }
 
+    /**
+     * Get a single note
+     * @param uid user's id to which the note belongs to
+     * @param noteId id of the note
+     * @return single note if note is available `null` if not
+     */
     @Override
     public NotesDto getNoteForUser(String uid, String noteId) {
         NotesDocument document = notesRepository.findNote(uid, noteId);
@@ -42,6 +53,12 @@ public class NotesServiceImpl implements NotesService {
         return modelMapper.map(document, NotesDto.class);
     }
 
+    /**
+     * Create a note
+     * @param requestDto content of the note
+     * @param uid the user to which this note belong
+     * @return created note
+     */
     @Override
     public NotesDto createNote(NotesDto requestDto, String uid) {
         NotesDocument document = modelMapper.map(requestDto, NotesDocument.class);
@@ -55,6 +72,13 @@ public class NotesServiceImpl implements NotesService {
         return modelMapper.map(response, NotesDto.class);
     }
 
+    /**
+     * Update a note
+     * @param uid user's id to which the note belongs to
+     * @param noteId id of the note
+     * @param requestDto content to be updated
+     * @return updated note
+     */
     @Override
     public NotesDto updateNote(String uid, String noteId, NotesDto requestDto) {
         NotesDocument document = checkIfValidNoteForCurrentUser(uid, noteId, RequestOperationName.UPDATE);
@@ -66,12 +90,22 @@ public class NotesServiceImpl implements NotesService {
         return modelMapper.map(updatedNote, NotesDto.class);
     }
 
+    /**
+     * Delete a note from store
+     * @param uid user's id to which the note belongs to
+     * @param noteId id of the note
+     */
     @Override
     public void deleteNote(String uid, String noteId) {
         NotesDocument document = checkIfValidNoteForCurrentUser(uid, noteId, RequestOperationName.DELETE);
         notesRepository.delete(document);
     }
 
+    /**
+     * Toggle the archive status of a given note
+     * @param uid user's id to which the note belongs to
+     * @param noteId id of the note
+     */
     @Override
     public void toggleArchiveStatus(String uid, String noteId) {
         NotesDocument document = checkIfValidNoteForCurrentUser(uid, noteId, RequestOperationName.TOGGLE_ARCHIVE);
@@ -80,6 +114,11 @@ public class NotesServiceImpl implements NotesService {
         notesRepository.save(document);
     }
 
+    /**
+     * Get all archived notes of a user
+     * @param uid user's id to which the note belongs to
+     * @return all notes which are archived
+     */
     @Override
     public List<NotesDto> getArchivedNotes(String uid) {
         List<NotesDocument> notesDocuments = notesRepository.findByUserIdAndArchiveStatus(uid, true);
@@ -87,6 +126,11 @@ public class NotesServiceImpl implements NotesService {
         return getNotesDtos(notesDocuments);
     }
 
+    /**
+     * Get all notes which aren't archived
+     * @param uid user's id to which the note belongs to
+     * @return all notes which are live
+     */
     @Override
     public List<NotesDto> getLiveNotes(String uid) {
         List<NotesDocument> notesDocuments = notesRepository.findByUserIdAndArchiveStatus(uid, false);

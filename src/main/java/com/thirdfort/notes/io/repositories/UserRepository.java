@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends MongoRepository<UserDocument, String> {
 
+    // List all users with email
     @Query("{email: '?0'}")
     List<UserDocument> findByEmail(String email);
 }

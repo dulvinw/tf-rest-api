@@ -31,6 +31,11 @@ public class UserServiceImpl implements UserService {
 
     ModelMapper modelMapper = new ModelMapper();
 
+    /**
+     * Create a new user
+     * @param user user's information
+     * @return created user
+     */
     @Override
     public UserDto createUser(UserDto user) {
         List<UserDocument> alreadyCreatedUserByEmail = userRepository.findByEmail(user.getEmail());
@@ -49,6 +54,11 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(repoResponse, UserDto.class);
     }
 
+    /**
+     * Get user's information given user's public id
+     * @param uid user's public id
+     * @return user information
+     */
     @Override
     public UserDto getUser(String uid) {
         UserDocument user = userRepository.findById(uid).orElse(null);
@@ -59,6 +69,11 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user, UserDto.class);
     }
 
+    /**
+     * Find a user using email. Used in the authentication filter
+     * @param email email of the user trying to log in
+     * @return userDetails object to be used in the authentication service
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         List<UserDocument> users = userRepository.findByEmail(email);

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -19,7 +20,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class UserDocument {
     @Id
     private String uid;
+
     private String name;
+
+    @Indexed(unique = true)
     private String email;
+
     private String encryptedPassword;
 }
