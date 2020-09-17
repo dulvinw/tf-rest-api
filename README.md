@@ -163,6 +163,10 @@ In order to access the Notes API, a user must be successfully authenticated usin
 - Bcrypt - Encrypt passwords for secure storing
 - MongoDB 
 
+### Usability
+
+- Postman collection is available [here](https://www.getpostman.com/collections/16a2375ffd34b7a0b946)
+
 ### Possible Improvements
 
 - Implement logging in back end.
