@@ -1,7 +1,7 @@
 package com.thirdfort.notes.services.impl;
 
 import com.thirdfort.notes.exceptions.userexceptions.UserServiceException;
-import com.thirdfort.notes.io.entities.UserDocument;
+import com.thirdfort.notes.io.documents.UserDocument;
 import com.thirdfort.notes.io.repositories.UserRepository;
 import com.thirdfort.notes.services.UserService;
 import com.thirdfort.notes.shared.Utils;

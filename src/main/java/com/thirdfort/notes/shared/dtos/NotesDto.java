@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NotesDto {
-    private String notesId;
+    private String noteId;
 
     private String uid;
 

@@ -1,4 +1,4 @@
-package com.thirdfort.notes.io.entities;
+package com.thirdfort.notes.io.documents;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

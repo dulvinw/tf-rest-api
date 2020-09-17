@@ -1,7 +1,7 @@
 package com.thirdfort.notes.services.impl;
 
 import com.thirdfort.notes.exceptions.notesexceptions.InvalidNoteException;
-import com.thirdfort.notes.io.entities.NotesDocument;
+import com.thirdfort.notes.io.documents.NotesDocument;
 import com.thirdfort.notes.io.repositories.NotesRepository;
 import com.thirdfort.notes.services.NotesService;
 import com.thirdfort.notes.shared.Utils;
@@ -18,7 +18,7 @@ import java.util.List;
 public class NotesServiceImpl implements NotesService {
 
     @Autowired
-    NotesRepository notesRepository;
+    private NotesRepository notesRepository;
 
     @Autowired
     private Utils utils;
@@ -34,6 +34,10 @@ public class NotesServiceImpl implements NotesService {
     @Override
     public NotesDto getNoteForUser(String uid, String noteId) {
         NotesDocument document = notesRepository.findNote(uid, noteId);
+
+        if (document == null) {
+            return null;
+        }
 
         return modelMapper.map(document, NotesDto.class);
     }

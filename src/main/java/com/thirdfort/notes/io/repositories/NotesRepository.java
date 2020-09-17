@@ -1,6 +1,6 @@
 package com.thirdfort.notes.io.repositories;
 
-import com.thirdfort.notes.io.entities.NotesDocument;
+import com.thirdfort.notes.io.documents.NotesDocument;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
